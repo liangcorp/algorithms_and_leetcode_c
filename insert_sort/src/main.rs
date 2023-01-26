@@ -5,31 +5,36 @@ fn main() {
 
     println!("{:?}", array);
 
-    // Array index goes from 0..n
+    // Index i goes from 0..n
     // Starting from the second position to the end (i.e. 1..n)
     for i in 1..array.len() {
-        // key is the value at the current index
-        // NOTE: first round is at index 1 (i.e. the second position)
+        // key is the value at index i
+        // NOTE: first round i is at index 1 (i.e. the second element)
         key = array[i];
 
-        // Moving the index to the beginning 1 index at a time
+        // Assign index j to (i - 1)
+        // First round j is at index 0 (i.e. the first element)
+        // i.e. i = 1 and j = 0 in the first round.
         j = i as i32 - 1;
 
-        // As long as the current index is not 0
+        // As long as j is not 0
         // AND as long as the key value is less than the
-        //  value at the current index
+        //  value at j
         //
-        // Assigned value at the current index to (current index + 1)
-        // i.e. moving the value at current index towards the end by 1 index
-        // Then moving the current index backwards towards the begining by 1 index
+        // Assigned value at j to (j + 1)
+        // i.e. moving the value at j towards the end by 1 index
+        // Then shifting j backwards towards the beginning by 1 index
+        // Continue this until a value (less then key value) is found
         while j > -1 && array[j as usize] > key {
             array[j as usize + 1] = array[j as usize];
             j -= 1;
         }
 
-        // When we reach the begining
-        // OR the value at current index is less than 'key'
-        // Assign key value to (current index + 1)
+        // When we reach the beginning
+        // OR the value at j is less than 'key'
+        // Assign key value to (j + 1)
+        // i.e. insert key value at the position behind
+        //    the value that is less then the key value
         array[(j + 1) as usize] = key;
     }
     println!("{:?}", array);
