@@ -1,2 +1,5 @@
 # computer_algorithms
-Exercises in computer algorithms
+
+## Introduction
+Exercises in computer algorithms written in rust language
+
