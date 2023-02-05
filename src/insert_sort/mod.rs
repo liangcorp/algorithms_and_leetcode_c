@@ -1,16 +1,7 @@
-/*
- *  Name: insert sort
- *  Author: Chen Liang
- *  Date: 05-02-2023
- */
-
-fn main() {
-    let mut array = [30, 10, 50, 30, 20, 80, 40, 90];
+/// Sorting from front to back
+pub fn insert_sort_forward(array: &mut [i32]) {
     let mut key;
     let mut j: i32;
-
-    println!("{:?}", array);
-
     // Index i goes from 0..n
     // Starting from the second position to the end (i.e. 1..n)
     for i in 1..array.len() {
@@ -35,7 +26,6 @@ fn main() {
             array[j as usize + 1] = array[j as usize];
             j -= 1;
         }
-
         // When we reach the beginning
         // OR the value at j is less than 'key'
         // Assign key value to (j + 1)
@@ -43,5 +33,5 @@ fn main() {
         //    the value that is less then the key value
         array[(j + 1) as usize] = key;
     }
-    println!("{:?}", array);
 }
+

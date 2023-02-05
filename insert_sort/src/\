@@ -1,5 +1,0 @@
-fn main() {
-    let unsorted = [30, 10, 50, 30, 20, 80, 40, 90];
-    let index = 0;
-    let sorted = [i32, 8];
-}
