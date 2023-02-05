@@ -1,6 +1,5 @@
 #[allow(dead_code)]
 /// Sorting monotonically increasing
-/// Looping from front to back
 pub fn mono_increasing(array: &mut [i32]) {
     let mut key;
     let mut j: i32;
@@ -25,7 +24,7 @@ pub fn mono_increasing(array: &mut [i32]) {
         // Then shifting j backwards towards the beginning by 1 index
         // Continue this until a value (less then key value) is found
         while j > -1 && array[j as usize] > key {
-            array[j as usize + 1] = array[j as usize];
+            array[(j + 1) as usize] = array[j as usize];
             j -= 1;
         }
         // When we reach the beginning
@@ -39,7 +38,6 @@ pub fn mono_increasing(array: &mut [i32]) {
 
 #[allow(dead_code)]
 /// Sorting monotonically decreasing
-/// Looping from front to back
 pub fn mono_decreasing(array: &mut [i32]) {
     let mut key;
     let mut j: i32;
@@ -53,7 +51,7 @@ pub fn mono_decreasing(array: &mut [i32]) {
         // the element at current position
         // then swap elements
         while j > -1 && array[j as usize] < key {
-            array[j as usize + 1] = array[j as usize];
+            array[(j + 1) as usize] = array[j as usize];
             j -= 1;
         }
         array[(j + 1) as usize] = key;
