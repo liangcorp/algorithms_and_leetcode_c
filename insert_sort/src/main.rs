@@ -1,3 +1,9 @@
+/*
+ *  Name: insert sort
+ *  Author: Chen Liang
+ *  Date: 05-02-2023
+ */
+
 fn main() {
     let mut array = [30, 10, 50, 30, 20, 80, 40, 90];
     let mut key;
