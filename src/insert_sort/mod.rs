@@ -1,5 +1,6 @@
-/// Sorting from front to back
-pub fn insert_sort_forward(array: &mut [i32]) {
+#[allow(dead_code)]
+/// Sorting monotonically increasing
+pub fn increasing(array: &mut [i32]) {
     let mut key;
     let mut j: i32;
     // Index i goes from 0..n
@@ -35,3 +36,24 @@ pub fn insert_sort_forward(array: &mut [i32]) {
     }
 }
 
+#[allow(dead_code)]
+/// Sorting monotonically decreasing
+pub fn decreasing(array: &mut [i32]) {
+    let mut key;
+    let mut j: i32;
+
+    for i in 1..array.len() {
+        key = array[i];
+
+        j = i as i32 - 1;
+
+        // If the element at next position is more than
+        // the element at current position
+        // then swap elements
+        while j > -1 && array[j as usize] < key {
+            array[j as usize + 1 ] = array[j as usize];
+            j -= 1;
+        }
+        array[(j + 1) as usize] = key;
+    }
+}
