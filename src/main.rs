@@ -1,3 +1,10 @@
+/*
+ * Name: Computer Algorithms
+ * Author: Chen Liang
+ * Description: Implementation of computer algorithms
+ * Date: 11-Feb-2023
+ */
+
 mod insert_sort;
 
 fn main() {
