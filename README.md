@@ -1,5 +1,5 @@
-# computer_algorithms
+# Computer Algorithms
 
 ## Introduction
-Exercises in computer algorithms written in rust language
 
+Exercises in computer algorithms written in c, golang and rust
