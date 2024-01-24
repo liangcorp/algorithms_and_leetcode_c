@@ -165,14 +165,12 @@ int main()
 	insert(mp, "Yogaholic", "Anjali");
 	insert(mp, "pluto14", "Vartika");
 	insert(mp, "elite_Programmer", "Manish");
-	insert(mp, "GFG", "GeeksforGeeks");
 	insert(mp, "decentBoy", "Mayank");
 
 	printf("%s\n", search(mp, "elite_Programmer"));
 	printf("%s\n", search(mp, "Yogaholic"));
 	printf("%s\n", search(mp, "pluto14"));
 	printf("%s\n", search(mp, "decentBoy"));
-	printf("%s\n", search(mp, "GFG"));
 
 	// Key is not inserted
 	printf("%s\n", search(mp, "randomKey"));
