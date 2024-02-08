@@ -83,43 +83,23 @@ struct ListNode *addTwoNumbers2(struct ListNode *l1, struct ListNode *l2)
 	int carry_over = 0;
 	int left_over = 0;
 
-	int l1_val = l1->val;
-	int l2_val = l2->val;
-
-	int end_of_l1 = 0;
-	int end_of_l2 = 0;
-
 	while (1 == 1) {
-		left_over = l1_val + l2_val + carry_over;
+		int l1_val = (l1 != NULL) ? l1->val : 0;
+		int l2_val = (l2 != NULL) ? l2->val : 0;
 
-		if (left_over > 9) {
-			left_over %= 10;
-			result->val = left_over;
-			carry_over = 1;
-		} else {
-			result->val = left_over;
-			carry_over = 0;
-		}
+		int sum = l1_val + l2_val + carry_over;
 
-		if (l1->next == NULL) {
-			end_of_l1 = 1;
-			l1_val = 0;
-		} else {
-			l1_val = l1->next->val;
+		carry_over = sum / 10;
+		result->val = sum % 10;
+
+		if (l1 != NULL)
 			l1 = l1->next;
-		}
 
-		if (l2->next == NULL) {
-			end_of_l2 = 1;
-			l2_val = 0;
-		} else {
-			l2_val = l2->next->val;
+		if (l2 != NULL)
 			l2 = l2->next;
-		}
 
-		if (end_of_l1 != 0 && end_of_l2 != 0 && carry_over != 1) {
+		if (l1 == NULL && l2 == NULL && carry_over == 0)
 			return head;
-		}
 
 		result->next = calloc(1, sizeof(struct ListNode));
 		result = result->next;
