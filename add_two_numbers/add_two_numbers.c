@@ -7,18 +7,6 @@ struct ListNode {
 	struct ListNode *next;
 };
 
-void add_first(struct ListNode *head, int x)
-{
-	struct ListNode *new_node = NULL;
-	new_node = calloc(1, sizeof(struct ListNode));
-	new_node->val = head->val;
-	new_node->next = head->next;
-
-	head->next = new_node;
-
-	head->val = x;
-}
-
 void add_last(struct ListNode *head, int val)
 {
 	struct ListNode *new_node = NULL;
@@ -56,36 +44,24 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2)
 	while (l1 != NULL || l2 != NULL || carry_over == 1) {
 		if (l1 == NULL && l2 != NULL) {
 			left_over = l2->val + carry_over;
-			if (left_over > 9) {
-				left_over %= 10;
-				carry_over = 1;
-			} else {
-				carry_over = 0;
-			}
 			l2 = l2->next;
 		} else if (l1 != NULL && l2 == NULL) {
 			left_over = l1->val + carry_over;
-			if (left_over > 9) {
-				left_over %= 10;
-				carry_over = 1;
-			} else {
-				carry_over = 0;
-			}
 			l1 = l1->next;
 		} else if (l1 == NULL && l2 == NULL && carry_over == 1) {
 			left_over = carry_over;
-			left_over %= 10;
 			carry_over = 0;
 		} else {
 			left_over = l1->val + l2->val + carry_over;
-			if (left_over > 9) {
-				left_over %= 10;
-				carry_over = 1;
-			} else {
-				carry_over = 0;
-			}
 			l1 = l1->next;
 			l2 = l2->next;
+		}
+
+		if (left_over > 9) {
+			left_over %= 10;
+			carry_over = 1;
+		} else {
+			carry_over = 0;
 		}
 
 		result->val = left_over;
@@ -96,6 +72,58 @@ struct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2)
 	}
 
 	return head;
+}
+
+// Does the same thing. No obvious speed improvment
+struct ListNode *addTwoNumbers2(struct ListNode *l1, struct ListNode *l2)
+{
+	struct ListNode *result = calloc(1, sizeof(struct ListNode));
+	struct ListNode *head = result;
+
+	int carry_over = 0;
+	int left_over = 0;
+
+	int l1_val = l1->val;
+	int l2_val = l2->val;
+
+	int end_of_l1 = 0;
+	int end_of_l2 = 0;
+
+	while (1 == 1) {
+		left_over = l1_val + l2_val + carry_over;
+
+		if (left_over > 9) {
+			left_over %= 10;
+			result->val = left_over;
+			carry_over = 1;
+		} else {
+			result->val = left_over;
+			carry_over = 0;
+		}
+
+		if (l1->next == NULL) {
+			end_of_l1 = 1;
+			l1_val = 0;
+		} else {
+			l1_val = l1->next->val;
+			l1 = l1->next;
+		}
+
+		if (l2->next == NULL) {
+			end_of_l2 = 1;
+			l2_val = 0;
+		} else {
+			l2_val = l2->next->val;
+			l2 = l2->next;
+		}
+
+		if (end_of_l1 != 0 && end_of_l2 != 0 && carry_over != 1) {
+			return head;
+		}
+
+		result->next = calloc(1, sizeof(struct ListNode));
+		result = result->next;
+	}
 }
 
 void free_list(struct ListNode *head)
@@ -133,7 +161,7 @@ int main()
 	// display(l1);
 	// display(l2);
 
-	struct ListNode *result = addTwoNumbers(l1, l2);
+	struct ListNode *result = addTwoNumbers2(l1, l2);
 	printf("display result\n");
 	display(result);
 
