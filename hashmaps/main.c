@@ -38,7 +38,7 @@ void initializeHashMap(struct hashMap *mp)
 	mp->numOfElements = 0;
 
 	// array of size = 1
-	mp->arr = (struct node **)malloc(sizeof(struct node *) * mp->capacity);
+	mp->arr = malloc(mp->capacity * sizeof(struct node *));
 	return;
 }
 
@@ -70,10 +70,8 @@ void insert(struct hashMap *mp, char *key, char *value)
 	// Getting bucket index for the given
 	// key - value pair
 	int bucketIndex = hashFunction(mp, key);
-	struct node *newNode = (struct node *)malloc(
-
-		// Creating a new node
-		sizeof(struct node));
+	// Creating a new node
+	struct node *newNode = malloc(sizeof(struct node));
 
 	// Setting value of node
 	setNode(newNode, key, value);
@@ -150,7 +148,7 @@ char *search(struct hashMap *mp, char *key)
 
 	// If no key found in the hashMap
 	// equal to the given key
-	char *errorMssg = (char *)malloc(sizeof(char) * 25);
+	char *errorMssg = malloc(sizeof(char) * 25);
 	errorMssg = "Oops! No data found.\n";
 	return errorMssg;
 }
@@ -159,7 +157,7 @@ char *search(struct hashMap *mp, char *key)
 int main()
 {
 	// Initialize the value of mp
-	struct hashMap *mp = (struct hashMap *)malloc(sizeof(struct hashMap));
+	struct hashMap *mp = malloc(sizeof(struct hashMap));
 	initializeHashMap(mp);
 
 	insert(mp, "Yogaholic", "Anjali");
