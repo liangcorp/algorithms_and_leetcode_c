@@ -12,7 +12,7 @@ struct node {
 // Function to create a new BST node
 struct node *newNode(int item)
 {
-	struct node *temp = (struct node *)malloc(sizeof(struct node));
+	struct node *temp = malloc(sizeof(struct node));
 	temp->key = item;
 	temp->left = temp->right = NULL;
 	return temp;
