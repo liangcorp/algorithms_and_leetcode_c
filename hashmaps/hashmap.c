@@ -1,7 +1,7 @@
 #include "hashmap.h"
 
 // like constructor
-void set_node(struct node *node, char *key, char *value)
+void set_node(struct Node *node, char *key, char *value)
 {
 	node->key = key;
 	node->value = value;
@@ -10,20 +10,20 @@ void set_node(struct node *node, char *key, char *value)
 };
 
 // like constructor
-void initialize_hashmap(struct hashMap *mp)
+void initialize_hashmap(struct HashMap *mp)
 {
 	// Default capacity in this case
-	mp->capacity = 100;
-	mp->numOfElements = 0;
+	mp->capacity = CAPACITY;
+	mp->num_of_elements = 0;
 
 	// array of size = 1
 	mp->arr = malloc(mp->capacity * sizeof(struct node *));
 	return;
 }
 
-int hash_function(struct hashMap *mp, char *key)
+int hash_function(struct HashMap *mp, char *key)
 {
-	int bucketIndex;
+	int bucket_index;
 	int sum = 0, factor = 31;
 	for (int i = 0; i < strlen(key); i++) {
 		// sum = sum + (ascii value of
@@ -40,94 +40,94 @@ int hash_function(struct hashMap *mp, char *key)
 			 __INT16_MAX__;
 	}
 
-	bucketIndex = sum;
-	return bucketIndex;
+	bucket_index = sum;
+	return bucket_index;
 }
 
-void insert(struct hashMap *mp, char *key, char *value)
+void insert(struct HashMap *mp, char *key, char *value)
 {
 	// Getting bucket index for the given
 	// key - value pair
-	int bucketIndex = hash_function(mp, key);
+	int bucket_index = hash_function(mp, key);
 	// Creating a new node
-	struct node *newNode = malloc(sizeof(struct node));
+	struct Node *new_node = malloc(sizeof(struct Node));
 
 	// Setting value of node
-	set_node(newNode, key, value);
+	set_node(new_node, key, value);
 
 	// Bucket index is empty....no collision
-	if (mp->arr[bucketIndex] == NULL) {
-		mp->arr[bucketIndex] = newNode;
+	if (mp->arr[bucket_index] == NULL) {
+		mp->arr[bucket_index] = new_node;
 	}
 
 	// Collision
 	else {
-		// Adding newNode at the head of
+		// Adding new_node at the head of
 		// linked list which is present
 		// at bucket index....insertion at
 		// head in linked list
-		newNode->next = mp->arr[bucketIndex];
-		mp->arr[bucketIndex] = newNode;
+		new_node->next = mp->arr[bucket_index];
+		mp->arr[bucket_index] = new_node;
 	}
 	return;
 }
 
-void delete_node(struct hashMap *mp, char *key)
+void delete_node(struct HashMap *mp, char *key)
 {
 	// Getting bucket index for the
 	// given key
-	int bucketIndex = hash_function(mp, key);
+	int bucket_index = hash_function(mp, key);
 
-	struct node *prevNode = NULL;
+	struct Node *prev_node = NULL;
 
 	// Points to the head of
 	// linked list present at
 	// bucket index
-	struct node *currNode = mp->arr[bucketIndex];
+	struct Node *current_node = mp->arr[bucket_index];
 
-	while (currNode != NULL) {
+	while (current_node != NULL) {
 		// Key is matched at delete this
 		// node from linked list
-		if (strcmp(key, currNode->key) == 0) {
+		if (strcmp(key, current_node->key) == 0) {
 			// Head node
 			// deletion
-			if (currNode == mp->arr[bucketIndex]) {
-				mp->arr[bucketIndex] = currNode->next;
+			if (current_node == mp->arr[bucket_index]) {
+				mp->arr[bucket_index] = current_node->next;
 			}
 
 			// Last node or middle node
 			else {
-				prevNode->next = currNode->next;
+				prev_node->next = current_node->next;
 			}
-			free(currNode);
+			free(current_node);
 			break;
 		}
-		prevNode = currNode;
-		currNode = currNode->next;
+		prev_node = current_node;
+		current_node = current_node->next;
 	}
 	return;
 }
 
-char *search(struct hashMap *mp, char *key)
+char *search(struct HashMap *mp, char *key)
 {
 	// Getting the bucket index
 	// for the given key
-	int bucketIndex = hash_function(mp, key);
+	int bucket_index = hash_function(mp, key);
 
 	// Head of the linked list
 	// present at bucket index
-	struct node *bucketHead = mp->arr[bucketIndex];
-	while (bucketHead != NULL) {
+	struct Node *bucket_head = mp->arr[bucket_index];
+	while (bucket_head != NULL) {
 		// Key is found in the hashMap
-		if (bucketHead->key == key) {
-			return bucketHead->value;
+		if (bucket_head->key == key) {
+			return bucket_head->value;
 		}
-		bucketHead = bucketHead->next;
+		bucket_head = bucket_head->next;
 	}
 
 	// If no key found in the hashMap
 	// equal to the given key
-	char *errorMssg = malloc(sizeof(char) * 25);
-	errorMssg = "Oops! No data found.\n";
-	return errorMssg;
+	char *error_msg = malloc(sizeof(char) * 25);
+	error_msg = "Oops! No data found.\n";
+	return error_msg;
 }

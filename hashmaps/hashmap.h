@@ -2,28 +2,30 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define CAPACITY 100
+
 // Linked List node
-struct node {
+struct Node {
 	// key is string
 	char *key;
 
 	// value is also string
 	char *value;
-	struct node *next;
+	struct Node *next;
 };
 
-struct hashMap {
-	// Current number of elements in hashMap
-	// and capacity of hashMap
-	int numOfElements, capacity;
+struct HashMap {
+	// Current number of elements in HashMap
+	// and capacity of HashMap
+	int num_of_elements, capacity;
 
 	// hold base address array of linked list
-	struct node **arr;
+	struct Node **arr;
 };
 
-void set_node(struct node *node, char *key, char *value);
-void initialize_hashmap(struct hashMap *mp);
-int hash_function(struct hashMap *mp, char *key);
-void insert(struct hashMap *mp, char *key, char *value);
-void delete_node(struct hashMap *mp, char *key);
-char *search(struct hashMap *mp, char *key);
+void set_node(struct Node *Node, char *key, char *value);
+void initialize_hashmap(struct HashMap *mp);
+int hash_function(struct HashMap *mp, char *key);
+void insert(struct HashMap *mp, char *key, char *value);
+void delete_node(struct HashMap *mp, char *key);
+char *search(struct HashMap *mp, char *key);
