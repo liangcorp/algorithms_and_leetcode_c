@@ -1,19 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-// Linked List node
-struct node {
-	// key is string
-	char *key;
-
-	// value is also string
-	char *value;
-	struct node *next;
-};
+#include "hashmap.h"
 
 // like constructor
-void setNode(struct node *node, char *key, char *value)
+void set_node(struct node *node, char *key, char *value)
 {
 	node->key = key;
 	node->value = value;
@@ -21,17 +9,8 @@ void setNode(struct node *node, char *key, char *value)
 	return;
 };
 
-struct hashMap {
-	// Current number of elements in hashMap
-	// and capacity of hashMap
-	int numOfElements, capacity;
-
-	// hold base address array of linked list
-	struct node **arr;
-};
-
 // like constructor
-void initializeHashMap(struct hashMap *mp)
+void initialize_hashmap(struct hashMap *mp)
 {
 	// Default capacity in this case
 	mp->capacity = 100;
@@ -42,7 +21,7 @@ void initializeHashMap(struct hashMap *mp)
 	return;
 }
 
-int hashFunction(struct hashMap *mp, char *key)
+int hash_function(struct hashMap *mp, char *key)
 {
 	int bucketIndex;
 	int sum = 0, factor = 31;
@@ -69,12 +48,12 @@ void insert(struct hashMap *mp, char *key, char *value)
 {
 	// Getting bucket index for the given
 	// key - value pair
-	int bucketIndex = hashFunction(mp, key);
+	int bucketIndex = hash_function(mp, key);
 	// Creating a new node
 	struct node *newNode = malloc(sizeof(struct node));
 
 	// Setting value of node
-	setNode(newNode, key, value);
+	set_node(newNode, key, value);
 
 	// Bucket index is empty....no collision
 	if (mp->arr[bucketIndex] == NULL) {
@@ -93,11 +72,11 @@ void insert(struct hashMap *mp, char *key, char *value)
 	return;
 }
 
-void delete(struct hashMap *mp, char *key)
+void delete_node(struct hashMap *mp, char *key)
 {
 	// Getting bucket index for the
 	// given key
-	int bucketIndex = hashFunction(mp, key);
+	int bucketIndex = hash_function(mp, key);
 
 	struct node *prevNode = NULL;
 
@@ -133,7 +112,7 @@ char *search(struct hashMap *mp, char *key)
 {
 	// Getting the bucket index
 	// for the given key
-	int bucketIndex = hashFunction(mp, key);
+	int bucketIndex = hash_function(mp, key);
 
 	// Head of the linked list
 	// present at bucket index
@@ -151,33 +130,4 @@ char *search(struct hashMap *mp, char *key)
 	char *errorMssg = malloc(sizeof(char) * 25);
 	errorMssg = "Oops! No data found.\n";
 	return errorMssg;
-}
-
-// Drivers code
-int main()
-{
-	// Initialize the value of mp
-	struct hashMap *mp = malloc(sizeof(struct hashMap));
-	initializeHashMap(mp);
-
-	insert(mp, "Yogaholic", "Anjali");
-	insert(mp, "pluto14", "Vartika");
-	insert(mp, "elite_Programmer", "Manish");
-	insert(mp, "decentBoy", "Mayank");
-
-	printf("%s\n", search(mp, "elite_Programmer"));
-	printf("%s\n", search(mp, "Yogaholic"));
-	printf("%s\n", search(mp, "pluto14"));
-	printf("%s\n", search(mp, "decentBoy"));
-
-	// Key is not inserted
-	printf("%s\n", search(mp, "randomKey"));
-
-	printf("\nAfter deletion : \n");
-
-	// Deletion of key
-	delete (mp, "decentBoy");
-	printf("%s\n", search(mp, "decentBoy"));
-
-	return 0;
 }
