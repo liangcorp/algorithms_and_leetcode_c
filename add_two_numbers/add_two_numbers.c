@@ -81,7 +81,6 @@ struct ListNode *addTwoNumbers2(struct ListNode *l1, struct ListNode *l2)
 	struct ListNode *head = result;
 
 	int carry_over = 0;
-	int left_over = 0;
 
 	while (1 == 1) {
 		int l1_val = (l1 != NULL) ? l1->val : 0;
@@ -110,7 +109,7 @@ void free_list(struct ListNode *head)
 {
 	struct ListNode *n_remove = NULL;
 
-	while (n_remove != NULL) {
+	while (head != NULL) {
 		n_remove = head;
 		head = head->next;
 		free(n_remove);
