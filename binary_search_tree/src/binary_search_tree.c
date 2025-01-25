@@ -1,16 +1,7 @@
-// C program to delete
-// a node of BST
-#include <stdio.h>
-#include <stdlib.h>
-
-// Given Node node
-struct node {
-	int key;
-	struct node *left, *right;
-};
+#include "binary_search_tree.h"
 
 // Function to create a new BST node
-struct node *newNode(int item)
+struct node *new_node(int item)
 {
 	struct node *temp = malloc(sizeof(struct node));
 	temp->key = item;
@@ -24,7 +15,7 @@ struct node *insert(struct node *node, int key)
 {
 	// If the tree is empty, return a new node
 	if (node == NULL)
-		return newNode(key);
+		return new_node(key);
 
 	// Otherwise, recur down the tree
 	if (key < node->key) {
@@ -47,29 +38,29 @@ void inorder(struct node *root)
 	}
 }
 
-// Function to do preorder traversal of BST
-void preOrder(struct node *root)
+// Function to do pre_order traversal of BST
+void pre_order(struct node *root)
 {
 	if (root != NULL) {
 		printf("%d ", root->key);
-		preOrder(root->left);
-		preOrder(root->right);
+		pre_order(root->left);
+		pre_order(root->right);
 	}
 }
 
-// Function to do postorder traversal of BST
-void postOrder(struct node *root)
+// Function to do post_order traversal of BST
+void post_order(struct node *root)
 {
 	if (root != NULL) {
-		postOrder(root->left);
-		postOrder(root->right);
+		post_order(root->left);
+		post_order(root->right);
 		printf("%d ", root->key);
 	}
 }
 
 // Function that returns the node with minimum
 // key value found in that tree
-struct node *minValueNode(struct node *node)
+struct node *min_value_node(struct node *node)
 {
 	struct node *current = node;
 
@@ -99,7 +90,7 @@ int height(struct node *node)
 }
 
 // Print nodes at a given level
-void printGivenLevel(struct node *root, int level)
+void print_given_level(struct node *root, int level)
 {
 	if (root == NULL)
 		return;
@@ -107,26 +98,26 @@ void printGivenLevel(struct node *root, int level)
 		printf("%d ", root->key);
 	else if (level > 1) {
 		// Recursive Call
-		printGivenLevel(root->left, level - 1);
-		printGivenLevel(root->right, level - 1);
+		print_given_level(root->left, level - 1);
+		print_given_level(root->right, level - 1);
 	}
 }
 
 // Function to line by line print
 // level order traversal a tree
-void printLevelOrder(struct node *root)
+void print_level_order(struct node *root)
 {
 	int h = height(root);
 	int i;
 	for (i = 1; i <= h; i++) {
-		printGivenLevel(root, i);
+		print_given_level(root, i);
 		printf("\n");
 	}
 }
 
 // Function to print leaf nodes
 // from left to right
-void printLeafNodes(struct node *root)
+void print_leaf_nodes(struct node *root)
 {
 	// If node is null, return
 	if (!root)
@@ -142,17 +133,17 @@ void printLeafNodes(struct node *root)
 	// If left child exists,
 	// check for leaf recursively
 	if (root->left)
-		printLeafNodes(root->left);
+		print_leaf_nodes(root->left);
 
 	// If right child exists,
 	// check for leaf recursively
 	if (root->right)
-		printLeafNodes(root->right);
+		print_leaf_nodes(root->right);
 }
 
 // Function to print all non-leaf
 // nodes in a tree
-void printNonLeafNode(struct node *root)
+void print_none_leaf_node(struct node *root)
 {
 	// Base Cases
 	if (root == NULL || (root->left == NULL && root->right == NULL))
@@ -165,13 +156,13 @@ void printNonLeafNode(struct node *root)
 
 	// If root is Not NULL and its one
 	// of its child is also not NULL
-	printNonLeafNode(root->left);
-	printNonLeafNode(root->right);
+	print_none_leaf_node(root->left);
+	print_none_leaf_node(root->right);
 }
 
 // Function to print the right view
 // of a binary tree.
-void rightViewUtil(struct node *root, int level, int *max_level)
+void right_view_until(struct node *root, int level, int *max_level)
 {
 	// Base Case
 	if (root == NULL)
@@ -185,21 +176,21 @@ void rightViewUtil(struct node *root, int level, int *max_level)
 
 	// Recur for right subtree first,
 	// then left subtree
-	rightViewUtil(root->right, level + 1, max_level);
+	right_view_until(root->right, level + 1, max_level);
 
-	rightViewUtil(root->left, level + 1, max_level);
+	right_view_until(root->left, level + 1, max_level);
 }
 
-// Wrapper over rightViewUtil()
-void rightView(struct node *root)
+// Wrapper over right_view_until()
+void right_view(struct node *root)
 {
 	int max_level = 0;
-	rightViewUtil(root, 1, &max_level);
+	right_view_until(root, 1, &max_level);
 }
 
 // Function to print left view of
 // binary tree
-void leftViewUtil(struct node *root, int level, int *max_level)
+void left_view_until(struct node *root, int level, int *max_level)
 {
 	// Base Case
 	if (root == NULL)
@@ -213,39 +204,39 @@ void leftViewUtil(struct node *root, int level, int *max_level)
 	}
 
 	// Recur for left and right subtrees
-	leftViewUtil(root->left, level + 1, max_level);
+	left_view_until(root->left, level + 1, max_level);
 
-	leftViewUtil(root->right, level + 1, max_level);
+	left_view_until(root->right, level + 1, max_level);
 }
 
-// Wrapper over leftViewUtil()
-void leftView(struct node *root)
+// Wrapper over left_view_until()
+void left_view(struct node *root)
 {
 	int max_level = 0;
-	leftViewUtil(root, 1, &max_level);
+	left_view_until(root, 1, &max_level);
 }
 
 // Function to get the total count of
 // nodes in a binary tree
-int nodeCount(struct node *node)
+int node_count(struct node *node)
 {
 	if (node == NULL)
 		return 0;
 
 	else
-		return nodeCount(node->left) + nodeCount(node->right) + 1;
+		return node_count(node->left) + node_count(node->right) + 1;
 }
 
 // Function to delete the BST
-struct node *emptyBST(struct node *root)
+struct node *empty_bst(struct node *root)
 {
 	struct node *temp;
 	if (root != NULL) {
 		// Traverse to left subtree
-		emptyBST(root->left);
+		empty_bst(root->left);
 
 		// Traverse to right subtree
-		emptyBST(root->right);
+		empty_bst(root->right);
 
 		printf("Released node:%d \n", root->key);
 		temp = root;
@@ -258,7 +249,7 @@ struct node *emptyBST(struct node *root)
 
 // Function that deletes the key and
 // returns the new root
-struct node *deleteNode(struct node *root, int key)
+struct node *delete_node(struct node *root, int key)
 {
 	// base Case
 	if (root == NULL)
@@ -268,14 +259,14 @@ struct node *deleteNode(struct node *root, int key)
 	// smaller than the root's key,
 	// then it lies in left subtree
 	if (key < root->key) {
-		root->left = deleteNode(root->left, key);
+		root->left = delete_node(root->left, key);
 	}
 
 	// If the key to be deleted is
 	// greater than the root's key,
 	// then it lies in right subtree
 	else if (key > root->key) {
-		root->right = deleteNode(root->right, key);
+		root->right = delete_node(root->right, key);
 	}
 
 	// If key is same as root's key,
@@ -297,42 +288,14 @@ struct node *deleteNode(struct node *root, int key)
 		// Node with two children:
 		// Get the inorder successor(smallest
 		// in the right subtree)
-		struct node *temp = minValueNode(root->right);
+		struct node *temp = min_value_node(root->right);
 
 		// Copy the inorder successor's
 		// content to this node
 		root->key = temp->key;
 
 		// Delete the inorder successor
-		root->right = deleteNode(root->right, temp->key);
+		root->right = delete_node(root->right, temp->key);
 	}
 	return root;
-}
-
-// Driver Code
-int main()
-{
-	/* Let us create following BST
-	    50
-	/	 \
-	30	 70
-	/ \ / \
-	20 40 60 80
-*/
-	struct node *root = NULL;
-
-	// Creating the BST
-	root = insert(root, 50);
-	insert(root, 30);
-	insert(root, 20);
-	insert(root, 40);
-	insert(root, 70);
-	insert(root, 60);
-	insert(root, 80);
-
-	// Function Call
-	root = deleteNode(root, 60);
-	inorder(root);
-
-	return 0;
 }
