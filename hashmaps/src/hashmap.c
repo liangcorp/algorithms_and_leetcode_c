@@ -17,7 +17,7 @@ void initialize_hashmap(struct HashMap *mp)
 	mp->num_of_elements = 0;
 
 	// array of size = 1
-	mp->arr = malloc(mp->capacity * sizeof(struct node *));
+	mp->arr = calloc(mp->capacity, sizeof(struct node *));
 	return;
 }
 
@@ -50,7 +50,7 @@ void insert(struct HashMap *mp, char *key, char *value)
 	// key - value pair
 	int bucket_index = hash_function(mp, key);
 	// Creating a new node
-	struct Node *new_node = malloc(sizeof(struct Node));
+	struct Node *new_node = calloc(1, sizeof(struct Node));
 
 	// Setting value of node
 	set_node(new_node, key, value);
@@ -125,9 +125,27 @@ char *search(struct HashMap *mp, char *key)
 		bucket_head = bucket_head->next;
 	}
 
-	// If no key found in the hashMap
-	// equal to the given key
-	char *error_msg = malloc(sizeof(char) * 25);
-	error_msg = "Oops! No data found.\n";
-	return error_msg;
+	return "";
+}
+
+void clean_up(struct HashMap *mp)
+{
+	int bucket_index = hash_function(mp, "");
+
+	// Head of the linked list
+	// present at bucket index
+	struct Node *bucket_head = mp->arr[bucket_index];
+	struct Node *temp;
+
+	while (bucket_head != NULL) {
+        temp = bucket_head;
+		bucket_head = bucket_head->next;
+        free(temp);
+	}
+    for (int i = 0; i < mp->capacity; i++) {
+        if (mp->arr[i] != NULL)
+            free(mp->arr[i]);
+    }
+    free(mp->arr);
+    free(mp);
 }

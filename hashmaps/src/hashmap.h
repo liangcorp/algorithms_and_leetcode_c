@@ -25,7 +25,8 @@ struct HashMap {
 
 void set_node(struct Node *Node, char *key, char *value);
 void initialize_hashmap(struct HashMap *mp);
-int hash_function(struct HashMap *mp, char *key);
 void insert(struct HashMap *mp, char *key, char *value);
 void delete_node(struct HashMap *mp, char *key);
+void clean_up(struct HashMap *mp);
+int hash_function(struct HashMap *mp, char *key);
 char *search(struct HashMap *mp, char *key);

@@ -4,7 +4,7 @@
 int main()
 {
 	// Initialize the value of mp
-	struct HashMap *mp = malloc(sizeof(struct HashMap));
+	struct HashMap *mp = calloc(1, sizeof(struct HashMap));
 	initialize_hashmap(mp);
 
 	insert(mp, "Yogaholic", "Anjali");
@@ -26,6 +26,6 @@ int main()
 	delete_node(mp, "decentBoy");
 	printf("%s\n", search(mp, "decentBoy"));
 
-    free(mp);
+    clean_up(mp);
 	return 0;
 }
